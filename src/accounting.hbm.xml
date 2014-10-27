@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+			"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+			"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cornu.PA.bean.Payment" table="Payment">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<many-to-one name="paymentCategory" cascade="none"
+			class="com.cornu.PA.bean.PaymentCategory" column="PaymentCategoryID"
+			lazy="false"></many-to-one>
+		<many-to-one name="account" cascade="none"
+			class="com.cornu.PA.bean.Account" column="AccountID" lazy="false"></many-to-one>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<property name="place" column="Place" type="string"></property>
+		<property name="remarks" column="Remarks" type="string"></property>
+		<property name="state" column="State" type="int"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.Income" table="Income">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<many-to-one name="incomeCategory" cascade="none"
+			class="com.cornu.PA.bean.IncomeCategory" column="IncomeCategoryID"
+			lazy="false"></many-to-one>
+		<many-to-one name="account" cascade="none"
+			class="com.cornu.PA.bean.Account" column="AccountID" lazy="false"></many-to-one>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<property name="remarks" column="Remarks" type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.PaymentCategory" table="PaymentCategory">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="paymentCategoryName" column="CategoryName"
+			type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.IncomeCategory" table="IncomeCategory">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="incomeCategoryName" column="CategoryName"
+			type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.Account" table="Account">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="accountName" column="AccountName" type="string"></property>
+		<property name="balance" column="Balance" type="float"></property>
+		<property name="type" column="Type" type="int"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.Transfer" table="Transfer">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<many-to-one name="outAccount" class="com.cornu.PA.bean.Account"
+			column="OutAccountID" lazy="false"></many-to-one>
+		<many-to-one name="inAccount" class="com.cornu.PA.bean.Account"
+			column="InAccountID" lazy="false"></many-to-one>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.Balance" table="Balance">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="totalPayment" column="TotalPayment" type="float"></property>
+		<property name="totalIncome" column="TotalIncome" type="float"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+</hibernate-mapping>

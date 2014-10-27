@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.action.extension" value="do" />
+	<package name="user" extends="struts-default" namespace="/user">
+		<interceptors>
+			<interceptor name="Char-interceptor"
+				class="com.cornu.PA.util.interceptor.CharInterceptor"></interceptor>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<action name="regist" class="com.cornu.PA.user.action.UserAction"
+			method="regist">
+			<result name="success">login.jsp</result>
+			<result name="error">regist.jsp</result>
+		</action>
+		<action name="login" class="com.cornu.PA.user.action.UserAction"
+			method="login">
+			<result name="success" type="redirect">/accounting/payment.do</result>
+			<result name="error">login.jsp</result>
+		</action>
+		<action name="logout" class="com.cornu.PA.user.action.UserAction"
+			method="logout">
+			<result name="success" type="redirect">login.jsp</result>
+			<result name="error" type="redirect">login.jsp</result>
+		</action>
+		<action name="modifyPassword" class="com.cornu.PA.user.action.UserAction"
+			method="modifyPassword">
+			<result name="success">login.jsp</result>
+			<result name="error">modifyPassword.jsp</result>
+			<result name="need_login">login.jsp</result>
+		</action>
+		<action name="photoUpload" class="com.cornu.PA.user.action.UserAction"
+			method="photoUpload">
+			<interceptor-ref name="fileUploadStack" />
+			<result name="success" type="redirect">modify.jsp </result>
+		</action>
+	</package>
+	<package name="accounting" extends="struts-default" namespace="/accounting">
+		<interceptors>
+			<interceptor name="Char-interceptor"
+				class="com.cornu.PA.util.interceptor.CharInterceptor"></interceptor>
+			<interceptor name="login-interceptor"
+				class="com.cornu.PA.util.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+
+				<interceptor-ref name="login-interceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<global-results>
+			<result name="need_login" type="redirect">/user/login.jsp</result>
+		</global-results>
+		<action name="payment" class="com.cornu.PA.action.PaymentAction"
+			method="paymentInit">
+			<result name="success">payment.jsp</result>
+		</action>
+		<action name="payment_add" class="com.cornu.PA.action.PaymentAction"
+			method="add">
+			<result name="success" type="redirect">payment.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentModify_init" class="com.cornu.PA.action.PaymentAction"
+			method="modifyInit">
+			<result name="success">payment_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="payment_modify" class="com.cornu.PA.action.PaymentAction"
+			method="modify">
+			<result name="success" type="redirect">payment.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentAddToHistoryPurchase" class="com.cornu.PA.action.PaymentAction"
+			method="addToHistoryPurchase">
+			<result name="success" type="redirect">payment.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentRemove" class="com.cornu.PA.action.PaymentAction"
+			method="remove">
+			<result name="success" type="redirect">payment.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="payment_search" class="com.cornu.PA.action.PaymentAction"
+			method="search">
+			<result name="success">payment.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="category" class="com.cornu.PA.action.CategoryAction"
+			method="categoryInit">
+			<result name="success">category.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="incomeCategoryModify_init" class="com.cornu.PA.action.CategoryAction"
+			method="incomeCategoryModifyInit">
+			<result name="success">category_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentCategoryModify_init" class="com.cornu.PA.action.CategoryAction"
+			method="paymentCategoryModifyInit">
+			<result name="success">category_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentCategory_add" class="com.cornu.PA.action.CategoryAction"
+			method="paymentCategoryAdd">
+			<result name="success" type="redirect">category.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="incomeCategory_add" class="com.cornu.PA.action.CategoryAction"
+			method="incomeCateogryAdd">
+			<result name="success" type="redirect">category.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="paymentCategory_modify" class="com.cornu.PA.action.CategoryAction"
+			method="paymentCategoryModify">
+			<result name="success" type="redirect">category.do</result>
+			<result name="error" type="redirect">user/login.jsp</result>
+		</action>
+		<action name="incomeCategory_modify" class="com.cornu.PA.action.CategoryAction"
+			method="incomeCategoryModify">
+			<result name="success" type="redirect">category.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="account" class="com.cornu.PA.action.AccountAction"
+			method="accountInit">
+			<result name="success">account.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="account_add" class="com.cornu.PA.action.AccountAction"
+			method="add">
+			<result name="success" type="redirect">account.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="accountModify_init" class="com.cornu.PA.action.AccountAction"
+			method="modifyInit">
+			<result name="success">account_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="account_modify" class="com.cornu.PA.action.AccountAction"
+			method="modify">
+			<result name="success" type="redirect">account.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="income" class="com.cornu.PA.action.IncomeAction"
+			method="incomeInit">
+			<result name="success">income.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="income_add" class="com.cornu.PA.action.IncomeAction"
+			method="add">
+			<result name="success" type="redirect">income.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="incomeModify_init" class="com.cornu.PA.action.IncomeAction"
+			method="modifyInit">
+			<result name="success">income_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="income_modify" class="com.cornu.PA.action.IncomeAction"
+			method="modify">
+			<result name="success" type="redirect">income.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="incomeRemove" class="com.cornu.PA.action.IncomeAction"
+			method="remove">
+			<result name="success" type="redirect">income.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="income_search" class="com.cornu.PA.action.IncomeAction"
+			method="search">
+			<result name="success">income.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="transfer" class="com.cornu.PA.action.TransferAction"
+			method="transferInit">
+			<result name="success">transfer.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="transfer_add" class="com.cornu.PA.action.TransferAction"
+			method="add">
+			<result name="success" type="redirect">transfer.do</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+	</package>
+	<package name="investment" extends="struts-default" namespace="/investment">
+		<interceptors>
+			<interceptor name="Char-interceptor"
+				class="com.cornu.PA.util.interceptor.CharInterceptor"></interceptor>
+			<interceptor name="login-interceptor"
+				class="com.cornu.PA.util.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+
+				<interceptor-ref name="login-interceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<global-results>
+			<result name="need_login" type="redirect">/user/login.jsp</result>
+		</global-results>
+		<action name="investment" class="com.cornu.PA.action.InvestmentAction"
+			method="investmentInit">
+			<result name="success">investment.jsp</result>
+			<result name="error">/user/login.jsp</result>
+		</action>
+		<action name="investment_add" class="com.cornu.PA.action.InvestmentAction"
+			method="add">
+			<result name="success" type="redirect">investment.do</result>
+			<result name="error">/user/login.jsp</result>
+		</action>
+		<action name="investment_modify" class="com.cornu.PA.action.InvestmentAction"
+			method="modify">
+			<result name="success" type="redirect">investment.do</result>
+			<result name="error">/user/login.jsp</result>
+		</action>
+		<action name="investmentModify_init" class="com.cornu.PA.action.InvestmentAction"
+			method="modifyInit">
+			<result name="success">investment_modify.jsp</result>
+			<result name="error" type="redirect">/user/login.jsp</result>
+		</action>
+		<action name="investment_remove" class="com.cornu.PA.action.InvestmentAction"
+			method="remove">
+			<result name="success" type="redirect">investment.do</result>
+			<result name="error">/user/login.jsp</result>
+		</action>
+		<action name="investmentType" class="com.cornu.PA.action.InvestmentTypeAction"
+			method="investmentTypeInit">
+			<result name="success">type.jsp</result>
+		</action>
+		<action name="investmentType_add" class="com.cornu.PA.action.InvestmentTypeAction"
+			method="add">
+			<result name="success" type="redirect">investmentType.do</result>
+		</action>
+		<action name="investmentTypeModify_init" class="com.cornu.PA.action.InvestmentTypeAction"
+			method="modifyInit">
+			<result name="success">type_modify.jsp</result>
+		</action>
+		<action name="investmentType_modify" class="com.cornu.PA.action.InvestmentTypeAction"
+			method="modify">
+			<result name="success" type="redirect">investmentType.do</result>
+		</action>
+		<action name="account" class="com.cornu.PA.action.AccountAction"
+			method="investmentAccountInit">
+			<result name="success">account.jsp</result>
+		</action>
+		<action name="account_add" class="com.cornu.PA.action.AccountAction"
+			method="addInvestmentAccount">
+			<result name="success" type="redirect">account.do</result>
+		</action>
+		<action name="accountModify_init" class="com.cornu.PA.action.AccountAction"
+			method="modifyInit">
+			<result name="success">account_modify.jsp</result>
+		</action>
+		<action name="investmentAccount_modify" class="com.cornu.PA.action.AccountAction"
+			method="accountModify">
+			<result name="success" type="redirect">account.do</result>
+		</action>
+	</package>
+	<package name="budget" extends="struts-default" namespace="/budget">
+		<interceptors>
+			<interceptor name="Char-interceptor"
+				class="com.cornu.PA.util.interceptor.CharInterceptor"></interceptor>
+			<interceptor name="login-interceptor"
+				class="com.cornu.PA.util.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+
+				<interceptor-ref name="login-interceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<global-results>
+			<result name="need_login" type="redirect">/user/login.jsp</result>
+		</global-results>
+		<action name="budget" class="com.cornu.PA.action.BudgetAction"
+			method="budgetInit">
+			<result name="success">budget.jsp</result>
+		</action>
+		<action name="budget_add" class="com.cornu.PA.action.BudgetAction"
+			method="add">
+			<result name="success" type="redirect">budget.do</result>
+		</action>
+		<action name="budget_achieve" class="com.cornu.PA.action.BudgetAction"
+			method="achieve">
+			<result name="success" type="redirect">budget.do</result>
+		</action>
+		<action name="budget_remove" class="com.cornu.PA.action.BudgetAction"
+			method="remove">
+			<result name="success" type="redirect">budget.do</result>
+		</action>
+		<action name="historyPurchase" class="com.cornu.PA.action.HistoryPurchaseAction"
+			method="historyPurchaseInit">
+			<result name="success">historyPurchase.jsp</result>
+		</action>
+		<action name="historyPurchase_add" class="com.cornu.PA.action.HistoryPurchaseAction"
+			method="add">
+			<result name="success" type="redirect">historyPurchase.do</result>
+		</action>
+		<action name="historyPurchaseModify_init" class="com.cornu.PA.action.HistoryPurchaseAction"
+			method="modifyInit">
+			<result name="success">historyPurchase_modify.jsp</result>
+		</action>
+		<action name="historyPurchase_modify" class="com.cornu.PA.action.HistoryPurchaseAction"
+			method="modify">
+			<result name="success" type="redirect">historyPurchase.do</result>
+		</action>
+		<action name="historyPurchase_remove" class="com.cornu.PA.action.HistoryPurchaseAction"
+			method="remove">
+			<result name="success" type="redirect">historyPurchase.do</result>
+		</action>
+	</package>
+</struts>

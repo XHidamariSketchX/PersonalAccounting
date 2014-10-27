@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+			"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+			"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cornu.PA.bean.Investment" table="Investment">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<many-to-one name="investmentType" cascade="none"
+			class="com.cornu.PA.bean.InvestmentType" column="InvestmentTypeID"
+			lazy="false"></many-to-one>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<property name="returnTime">
+			<column name="ReturnTime" sql-type="datetime"></column>
+		</property>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="expectedReturn" column="ExpectedReturn" type="float"></property>
+		<property name="actualReturn" column="ActualReturn" type="float"></property>
+		<property name="state" column="State" type="int"></property>
+		<property name="remarks" column="Remarks" type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.InvestmentType" table="InvestmentType">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="investmentTypeName" column="InvestmentTypeName"
+			type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+</hibernate-mapping>

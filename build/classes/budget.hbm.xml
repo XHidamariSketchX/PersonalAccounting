@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+			"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+			"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cornu.PA.bean.Budget" table="Budget">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<property name="application" column="Application" type="string"></property>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="place" column="Place" type="string"></property>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<property name="state" column="State" type="int"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+	<class name="com.cornu.PA.bean.HistoryPurchase" table="HistoryPurchase">
+		<id name="id" column="ID" type="int">
+			<generator class="increment"></generator>
+		</id>
+		<many-to-one name="paymentCategory" cascade="none"
+			class="com.cornu.PA.bean.PaymentCategory" column="PaymentCategoryID"
+			lazy="false"></many-to-one>
+		<many-to-one name="account" cascade="none"
+			class="com.cornu.PA.bean.Account" column="AccountID" lazy="false"></many-to-one>
+		<property name="amount" column="Amount" type="float"></property>
+		<property name="createTime">
+			<column name="CreateTime" sql-type="datetime"></column>
+		</property>
+		<property name="place" column="Place" type="string"></property>
+		<property name="remarks" column="Remarks" type="string"></property>
+		<many-to-one name="user" class="com.cornu.PA.user.bean.User"
+			column="UserID"></many-to-one>
+	</class>
+</hibernate-mapping>
